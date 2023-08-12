@@ -137,24 +137,23 @@
       if ((x < 1 || x > 3 ) || (y < 1 || y > 3 )) {
         return "invalid coordinates"
       } 
-      const rows = grid.length
-      const cols = grid[0].length
+      const rows = grid.length;
+      const cols = grid[0].length;
       
       for (let i = 0; i < rows; i++) {
       for (let j = 0; j < cols; j++) {
+      if (i + 1 === y && j + 1 === x) {
         const value = grid[i][j];
+        if (value === "🟥") {
+          return "🟥 💀";
+        } else if (value === "🟦") {
+          return "🟦 🥳";
+        } 
+       }
+    }
 
-      if (value === "🟥") {
-        return "🟥 💀"
-      } else if (value === "🟦") {
-          return "🟦 🥳"
-       } 
-      } 
-    } 
-   }
-    
-
-
+  }
+}
 
     // 👉 CHALLENGE 3
     function booleanize() {
