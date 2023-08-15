@@ -219,7 +219,7 @@
     }
 
     // 👉 CHALLENGE 5
-    function normalizePhoneNumber(string) {
+    function normalizePhoneNumber(number) {
       // 🧠 normalizePhoneNumber takes a string as its only argument, representing a ten-digit number
       // The function returns a string formatted as seen below
       // 🧠 Examples of usage:
@@ -231,36 +231,24 @@
       // 🌟 HINT: instead of looping over the number's digits, loop backwards over a template "(XXX) XXX-XXXX"
       // 🌟 HINT: at each iteration, if the current character is an "X", replace it with the result of popping a digit from the number
       // 🌟 HINT: if you'd rather loop forwards, use `shift` instead of `pop`
-  // Check if the input consists only of digits
-  if (!/^\d+$/.test(string)) {
-        return "invalid phone number";
-    }
-
-    // Remove any non-digit characters
-    const cleanNumber = string.replace(/\D/g, '');
-
-    // Check for correct length
-    if (cleanNumber.length !== 10) {
-        return "type a 10-digit number";
-    }
-
-    // Use a template to format the phone number
-    const template = "(XXX) XXX-XXXX";
-    let result = '';
-
-    let currentIndex = 0;
-    for (const char of template) {
-        if (char === 'X') {
-            result += cleanNumber[currentIndex];
-            currentIndex++;
+   
+    if (number.length !== 10 || !/^\d+$/.test(number)) {
+        if (number.length !== 10) {
+            return "type a 10-digit number"
         } else {
-            result += char;
+            return "invalid phone number"
         }
     }
 
-    return result;
-}
+    const template = "(XXX) XXX-XXXX"
+    const digits = number.split("");
+    const formattedNumber = template
+        .split("")
+        .map(char => (char === "X" ? digits.shift() : char))
+        .join("");
 
+    return formattedNumber;
+}
 
     // 👉 CHALLENGE 6 (bonus, NOT graded)
     function diceRolls() {
