@@ -192,7 +192,7 @@
 }
 
     // 👉 CHALLENGE 4
-    function scrub() {
+    function scrub(text, forbidden) {
       // 🧠 scrub takes a string "text" as its first argument, and an array of forbidden words "forbidden" as its second
       // Any word in the text included in the array of forbidden words is replaced with a word of equal length but made of lowcase "x"
       // The scrubbed text is then returned from the function, as seen in the examples below
@@ -204,10 +204,22 @@
       //    scrub("aces high", ["high", "aces", "hearts"]) // returns "xxxx xxxx"
       //    scrub("", ["high", "aces""]) // returns ""
       // 🌟 HINT: useful array methods to use are `push`, `indexOf`, `split`, `join`
+      if (forbidden.length === 0) {
+        return text
+      }
+
+      const words = text.split(' ')
+      
+      for (let i = 0; i < words.length; i++) {
+        if (forbidden.indexOf(words[i])!== -1) {
+          words[i] = 'x'.repeat(words[i].length)
+        }
+      }
+      return words.join(' ')
     }
 
     // 👉 CHALLENGE 5
-    function normalizePhoneNumber() {
+    function normalizePhoneNumber(string) {
       // 🧠 normalizePhoneNumber takes a string as its only argument, representing a ten-digit number
       // The function returns a string formatted as seen below
       // 🧠 Examples of usage:
@@ -219,7 +231,36 @@
       // 🌟 HINT: instead of looping over the number's digits, loop backwards over a template "(XXX) XXX-XXXX"
       // 🌟 HINT: at each iteration, if the current character is an "X", replace it with the result of popping a digit from the number
       // 🌟 HINT: if you'd rather loop forwards, use `shift` instead of `pop`
+  // Check if the input consists only of digits
+  if (!/^\d+$/.test(string)) {
+        return "invalid phone number";
     }
+
+    // Remove any non-digit characters
+    const cleanNumber = string.replace(/\D/g, '');
+
+    // Check for correct length
+    if (cleanNumber.length !== 10) {
+        return "type a 10-digit number";
+    }
+
+    // Use a template to format the phone number
+    const template = "(XXX) XXX-XXXX";
+    let result = '';
+
+    let currentIndex = 0;
+    for (const char of template) {
+        if (char === 'X') {
+            result += cleanNumber[currentIndex];
+            currentIndex++;
+        } else {
+            result += char;
+        }
+    }
+
+    return result;
+}
+
 
     // 👉 CHALLENGE 6 (bonus, NOT graded)
     function diceRolls() {
